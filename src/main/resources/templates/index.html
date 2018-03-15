@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<title></title>
+	<script type="text/javascript" src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+	<script type="text/javascript" src="/webjars/popper.js/1.12.9-1/umd/popper.min.js"></script>
+	<script type="text/javascript" src="/webjars/bootstrap/4.0.0-1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/webjars/bootstrap/4.0.0-1/css/bootstrap.min.css" />
+</head>
+<body>
+	<div class="container">
+		<div class="card mt-4">
+			<table class="table table-hover">
+				<thead class="thead-dark">
+					<tr>
+						<th>ID</th>
+						<th>Country</th>
+						<th>Capital</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="country :${data.content}">
+						<td th:text="${country.id}"></td>
+						<td th:text="${country.name}"></td>
+						<td th:text="${country.capital}"></td>
+						<td><a class="btn btn-primary eBtn">Edit</a></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<nav aria-label="Page navigation">
+			  <ul class="pagination mx-3">    
+			    <li class="page-item" th:classappend="${currentPage}==${i}?'active':''" 
+			    		th:each="i : ${#numbers.sequence(0,data.totalPages-1)}">
+			    		<a th:href="@{/(page=${i})}" th:text="${i}" class="page-link"></a>
+			    	</li>
+			  </ul>
+			</nav>
+		</div>
+		
+		<div class="myForm">
+			<form th:action="@{/save}" method="post"></form>
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal">
+				  Launch demo modal
+				</button>
+				
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Update or Create</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        <div class="form-group">
+				        		<label for="id">Id:</label>
+				        		<input type="text" id="id" name="id" value="" class="form-control" />
+				        </div>
+				        <div class="form-group">
+				        		<label for="name">Country:</label>
+				        		<input type="text" id="name" name="name" value="" class="form-control" />
+				        </div> 
+				        <div class="form-group">
+				        		<label for="capital">Capital:</label>
+				        		<input type="text" id="capital" name="capital" value="" class="form-control" />
+				        </div>  
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				        <button type="submit" class="btn btn-primary" value="save">Save</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
